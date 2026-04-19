@@ -8,7 +8,7 @@ const Activities = () => {
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/activities/`;
+        const apiUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/activities/`;
         console.log('Fetching activities from:', apiUrl);
 
         const response = await fetch(apiUrl);
@@ -33,24 +33,31 @@ const Activities = () => {
     fetchActivities();
   }, []);
 
-  if (loading) return <div>Loading activities...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="alert alert-info mt-4">Loading activities...</div>;
+  if (error) return <div className="alert alert-danger mt-4">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
-      <h2>Activities</h2>
-      <div className="row">
-        {activities.map((activity) => (
-          <div key={activity.id} className="col-md-4 mb-3">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{activity.name}</h5>
-                <p className="card-text">{activity.description}</p>
-                <p className="card-text"><small className="text-muted">Type: {activity.activity_type}</small></p>
-              </div>
-            </div>
-          </div>
-        ))}
+      <h2 className="mb-4">Activities</h2>
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead className="table-dark">
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {activities.map((activity) => (
+              <tr key={activity.id}>
+                <td>{activity.name}</td>
+                <td>{activity.description}</td>
+                <td>{activity.activity_type}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ function App() {
         <main className="container mt-4">
           <Routes>
             <Route path="/" element={
-              <div className="text-center mt-5">
+              <div className="welcome-section text-center">
                 <h1>Welcome to OctoFit Tracker</h1>
                 <p className="lead">Track your fitness activities, join teams, and compete on the leaderboard!</p>
               </div>

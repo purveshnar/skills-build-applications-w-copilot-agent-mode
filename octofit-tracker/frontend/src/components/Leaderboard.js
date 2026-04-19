@@ -8,7 +8,7 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/leaderboard/`;
+        const apiUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`;
         console.log('Fetching leaderboard from:', apiUrl);
 
         const response = await fetch(apiUrl);
@@ -33,15 +33,15 @@ const Leaderboard = () => {
     fetchLeaderboard();
   }, []);
 
-  if (loading) return <div>Loading leaderboard...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="alert alert-info mt-4">Loading leaderboard...</div>;
+  if (error) return <div className="alert alert-danger mt-4">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
-      <h2>Leaderboard</h2>
+      <h2 className="mb-4">Leaderboard</h2>
       <div className="table-responsive">
-        <table className="table table-striped">
-          <thead>
+        <table className="table table-striped table-hover">
+          <thead className="table-dark">
             <tr>
               <th>Rank</th>
               <th>User</th>

@@ -8,7 +8,7 @@ const Workouts = () => {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/workouts/`;
+        const apiUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/workouts/`;
         console.log('Fetching workouts from:', apiUrl);
 
         const response = await fetch(apiUrl);
@@ -33,25 +33,33 @@ const Workouts = () => {
     fetchWorkouts();
   }, []);
 
-  if (loading) return <div>Loading workouts...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="alert alert-info mt-4">Loading workouts...</div>;
+  if (error) return <div className="alert alert-danger mt-4">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
-      <h2>Workouts</h2>
-      <div className="row">
-        {workouts.map((workout) => (
-          <div key={workout.id} className="col-md-6 mb-3">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{workout.name}</h5>
-                <p className="card-text">{workout.description}</p>
-                <p className="card-text"><small className="text-muted">Duration: {workout.duration} minutes</small></p>
-                <p className="card-text"><small className="text-muted">Difficulty: {workout.difficulty}</small></p>
-              </div>
-            </div>
-          </div>
-        ))}
+      <h2 className="mb-4">Workouts</h2>
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead className="table-dark">
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Duration (min)</th>
+              <th>Difficulty</th>
+            </tr>
+          </thead>
+          <tbody>
+            {workouts.map((workout) => (
+              <tr key={workout.id}>
+                <td>{workout.name}</td>
+                <td>{workout.description}</td>
+                <td>{workout.duration}</td>
+                <td>{workout.difficulty}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

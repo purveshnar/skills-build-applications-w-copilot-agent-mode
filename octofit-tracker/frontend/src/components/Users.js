@@ -8,7 +8,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/users/`;
+        const apiUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/users/`;
         console.log('Fetching users from:', apiUrl);
 
         const response = await fetch(apiUrl);
@@ -33,24 +33,31 @@ const Users = () => {
     fetchUsers();
   }, []);
 
-  if (loading) return <div>Loading users...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="alert alert-info mt-4">Loading users...</div>;
+  if (error) return <div className="alert alert-danger mt-4">Error: {error}</div>;
 
   return (
     <div className="container mt-4">
-      <h2>Users</h2>
-      <div className="row">
-        {users.map((user) => (
-          <div key={user.id} className="col-md-4 mb-3">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{user.username}</h5>
-                <p className="card-text">{user.email}</p>
-                <p className="card-text"><small className="text-muted">Joined: {new Date(user.date_joined).toLocaleDateString()}</small></p>
-              </div>
-            </div>
-          </div>
-        ))}
+      <h2 className="mb-4">Users</h2>
+      <div className="table-responsive">
+        <table className="table table-striped table-hover">
+          <thead className="table-dark">
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+                <td>{new Date(user.date_joined).toLocaleDateString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
